@@ -1,0 +1,9 @@
+{
+  "name": "docsorb-sdk",
+  "private": true,
+  "packageManager": "pnpm@10.18.2",
+  "scripts": {
+    "build": "pnpm --filter @docsorb/sdk build",
+    "test": "pnpm --filter @docsorb/sdk test"
+  }
+}

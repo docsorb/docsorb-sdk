@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: DocsOrb Guardrails API
+  version: 0.1.0
+  description: Evaluate, sanitise, and anonymise content against company guardrails.
+servers:
+  - url: https://api.docsorb.com/api/v1
+paths:
+  /guardrails/evaluate:
+    post:
+      operationId: evaluateGuardrails
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuardrailContentRequest"
+      responses:
+        "200":
+          description: Evaluation verdict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvaluateResponse"
+  /guardrails/sanitise:
+    post:
+      operationId: sanitiseGuardrails
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuardrailContentRequest"
+      responses:
+        "200":
+          description: Sanitised text and verdict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RewriteResponse"
+  /guardrails/anonymise:
+    post:
+      operationId: anonymiseGuardrails
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuardrailContentRequest"
+      responses:
+        "200":
+          description: Anonymised text, mapping, and verdict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RewriteResponse"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    GuardrailContentRequest:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+        interventionPoint:
+          type: string
+          enum: [user_input, tool_call, tool_response, output]
+        aiToolId:
+          type: string
+        locale:
+          type: string
+        actorMetadata:
+          type: object
+          additionalProperties: true
+        deviceMetadata:
+          type: object
+          additionalProperties: true
+        sessionMetadata:
+          type: object
+          additionalProperties: true
+        requestMetadata:
+          type: object
+          additionalProperties: true
+    EvaluationMatch:
+      type: object
+      additionalProperties: true
+    EvaluateResponse:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+        outcome:
+          type: string
+        actionTaken:
+          type: string
+        interventionPoint:
+          type: string
+        matches:
+          type: array
+          items:
+            $ref: "#/components/schemas/EvaluationMatch"
+        evaluatedAt:
+          type: string
+        eventId:
+          type: string
+          nullable: true
+        userMessage:
+          type: string
+          nullable: true
+    RewriteReplacement:
+      type: object
+      properties:
+        type:
+          type: string
+        replacement:
+          type: string
+        start:
+          type: integer
+        end:
+          type: integer
+    AnonymiseMappingEntry:
+      type: object
+      properties:
+        token:
+          type: string
+        type:
+          type: string
+        original:
+          type: string
+    RewriteResponse:
+      allOf:
+        - $ref: "#/components/schemas/EvaluateResponse"
+        - type: object
+          properties:
+            text:
+              type: string
+            changed:
+              type: boolean
+            replacements:
+              type: array
+              items:
+                $ref: "#/components/schemas/RewriteReplacement"
+            mapping:
+              type: array
+              items:
+                $ref: "#/components/schemas/AnonymiseMappingEntry"

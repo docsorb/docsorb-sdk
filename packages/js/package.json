@@ -22,7 +22,23 @@
     "build": "tsc -p tsconfig.json",
     "test": "vitest run"
   },
+  "keywords": [
+    "docsorb",
+    "guardrails",
+    "ai",
+    "sdk"
+  ],
+  "author": "DocsOrb",
   "license": "MIT",
+  "homepage": "https://github.com/docsorb/docsorb-sdk/tree/main/packages/js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docsorb/docsorb-sdk.git",
+    "directory": "packages/js"
+  },
+  "bugs": {
+    "url": "https://github.com/docsorb/docsorb-sdk/issues"
+  },
   "publishConfig": {
     "access": "public"
   },

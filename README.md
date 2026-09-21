@@ -63,12 +63,12 @@ pip install docsorb
 
 Auth is the API key. Company is bound to the key. `createClient` / `create_client` does not hit the network.
 
-`DOCSORB_URL` is usually `https://api.docsorb.com`. The key needs the `shield.evaluate` scope.
+`DOCSORB_URL` is `https://sdk.docsorb.com`. The key needs the `shield.evaluate` scope.
 
 ```ts
 import { createClient } from "@docsorb/sdk";
 
-const docsorb = createClient(process.env.DOCSORB_URL!, process.env.DOCSORB_API_KEY!, {
+const docsorb = createClient("https://sdk.docsorb.com", process.env.DOCSORB_API_KEY!, {
   actor: { userId: user.id, email: user.email },
 });
 ```
@@ -77,7 +77,7 @@ const docsorb = createClient(process.env.DOCSORB_URL!, process.env.DOCSORB_API_K
 from docsorb import create_client
 
 docsorb = create_client(
-    os.environ["DOCSORB_URL"],
+    "https://sdk.docsorb.com",
     os.environ["DOCSORB_API_KEY"],
     options={"actor": {"user_id": user.id, "email": user.email}},
 )

@@ -11,7 +11,7 @@ function jsonResponse(status: number, body: unknown) {
 describe("createClient", () => {
   it("rejects a missing url or key", () => {
     expect(() => createClient("", "do_live_x")).toThrow(DocsOrbError);
-    expect(() => createClient("https://api.docsorb.com", "")).toThrow(DocsOrbError);
+    expect(() => createClient("https://sdk.docsorb.com", "")).toThrow(DocsOrbError);
   });
 
   it("sends client actor metadata on evaluate", async () => {
@@ -19,7 +19,7 @@ describe("createClient", () => {
       jsonResponse(200, { allowed: true, outcome: "allowed", matches: [], interventionPoint: "user_input", evaluatedAt: "2026-01-01T00:00:00.000Z" }),
     );
 
-    const docsorb = createClient("https://api.docsorb.com", "do_live_test", {
+    const docsorb = createClient("https://sdk.docsorb.com", "do_live_test", {
       actor: { userId: "u1", email: "jane@acme.com" },
       session: { id: "s1" },
       global: { fetch: fetchMock },
@@ -31,7 +31,7 @@ describe("createClient", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url, init] = fetchMock.mock.calls[0]!;
-    expect(url).toBe("https://api.docsorb.com/api/v1/guardrails/evaluate");
+    expect(url).toBe("https://sdk.docsorb.com/api/v1/guardrails/evaluate");
     expect((init as RequestInit).headers).toMatchObject({
       authorization: "Bearer do_live_test",
     });
@@ -45,7 +45,7 @@ describe("createClient", () => {
     const fetchMock = vi.fn().mockResolvedValue(
       jsonResponse(200, { allowed: true, outcome: "allowed", matches: [], interventionPoint: "user_input", evaluatedAt: "2026-01-01T00:00:00.000Z" }),
     );
-    const docsorb = createClient("https://api.docsorb.com", "do_live_test", {
+    const docsorb = createClient("https://sdk.docsorb.com", "do_live_test", {
       actor: { userId: "u1" },
       global: { fetch: fetchMock },
     });
@@ -59,7 +59,7 @@ describe("createClient", () => {
     const fetchMock = vi.fn().mockResolvedValue(
       jsonResponse(401, { message: "Unauthorized", data: { errorCode: "unauthorized" } }),
     );
-    const docsorb = createClient("https://api.docsorb.com", "do_live_test", {
+    const docsorb = createClient("https://sdk.docsorb.com", "do_live_test", {
       global: { fetch: fetchMock },
     });
 
@@ -77,7 +77,7 @@ describe("createClient", () => {
         jsonResponse(200, { allowed: false, outcome: "blocked", matches: [], interventionPoint: "user_input", evaluatedAt: "2026-01-01T00:00:00.000Z" }),
       );
 
-    const docsorb = createClient("https://api.docsorb.com", "do_live_test", {
+    const docsorb = createClient("https://sdk.docsorb.com", "do_live_test", {
       global: { fetch: fetchMock },
     });
 
@@ -86,7 +86,7 @@ describe("createClient", () => {
   });
 
   it("restores anonymised text from the mapping", () => {
-    const docsorb = createClient("https://api.docsorb.com", "do_live_test");
+    const docsorb = createClient("https://sdk.docsorb.com", "do_live_test");
     expect(
       docsorb.guardrails.restore("Hi [EMAIL_1]", {
         mapping: [{ token: "[EMAIL_1]", type: "EMAIL", original: "jane@acme.com" }],

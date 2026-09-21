@@ -1,6 +1,6 @@
 {
   "name": "@docsorb/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DocsOrb SDK — createClient, then guardrails.evaluate / sanitise / anonymise.",
   "type": "module",
   "main": "./dist/index.js",

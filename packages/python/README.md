@@ -16,13 +16,13 @@ Auth happens in `create_client`. No network call is made until you use a tool.
 from docsorb import create_client
 
 docsorb = create_client(
-    os.environ["DOCSORB_URL"],
+    "https://sdk.docsorb.com",
     os.environ["DOCSORB_API_KEY"],
     options={"actor": {"user_id": user.id, "email": user.email}},
 )
 ```
 
-`DOCSORB_URL` is usually `https://api.docsorb.com`. The key needs the `shield.evaluate` scope.
+`DOCSORB_URL` is `https://sdk.docsorb.com`. The key needs the `shield.evaluate` scope.
 
 ## Guardrails
 

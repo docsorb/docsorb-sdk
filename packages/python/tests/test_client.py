@@ -39,7 +39,7 @@ def _handler(request: httpx.Request) -> httpx.Response:
 def _client(**options):
     transport = httpx.MockTransport(_handler)
     return create_client(
-        "https://api.docsorb.com",
+        "https://sdk.docsorb.com",
         "do_live_test",
         options=options,
         http=httpx.Client(transport=transport),
@@ -50,7 +50,7 @@ def test_create_client_requires_url_and_key():
     with pytest.raises(DocsOrbError):
         create_client("", "do_live_test")
     with pytest.raises(DocsOrbError):
-        create_client("https://api.docsorb.com", "")
+        create_client("https://sdk.docsorb.com", "")
 
 
 def test_evaluate_sends_actor_metadata():

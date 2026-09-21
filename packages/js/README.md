@@ -15,12 +15,12 @@ Auth happens in `createClient`. No network call is made until you use a tool.
 ```ts
 import { createClient } from "@docsorb/sdk";
 
-const docsorb = createClient(process.env.DOCSORB_URL!, process.env.DOCSORB_API_KEY!, {
+const docsorb = createClient("https://sdk.docsorb.com", process.env.DOCSORB_API_KEY!, {
   actor: { userId: user.id, email: user.email },
 });
 ```
 
-`DOCSORB_URL` is usually `https://api.docsorb.com`. The key needs the `shield.evaluate` scope.
+`DOCSORB_URL` is `https://sdk.docsorb.com`. The key needs the `shield.evaluate` scope.
 
 ## Guardrails
 

@@ -11,7 +11,7 @@
   <h1 align="center">DocsOrb SDK</h1>
 
   <p align="center">
-    Publishable clients for DocsOrb Guardrails.
+    Official client libraries for DocsOrb Guardrails.
     <br />
     <a href="https://help.docsorb.com/ai/guardrails">Guides</a>
     ·
@@ -34,7 +34,7 @@
 
 ## Libraries
 
-This monorepo is what you publish. The APIs live in `docsorb-business`.
+Official DocsOrb clients for checking, sanitising, and anonymising prompts before they reach your model.
 
 | Library | Description | Status |
 | --- | --- | --- |
@@ -45,7 +45,7 @@ This monorepo is what you publish. The APIs live in `docsorb-business`.
 | **[@docsorb/nuxt](./packages/nuxt)** | Nuxt module | Coming later |
 | **[@docsorb/ssr](./packages/ssr)** | Next.js helpers | Coming later |
 
-Framework packages wrap `@docsorb/sdk`. They do not add a second HTTP client.
+Framework packages are built on `@docsorb/sdk`, so the API is the same everywhere.
 
 ## Quick Start
 
@@ -61,9 +61,7 @@ pip install docsorb
 
 ### Create a client
 
-Auth is the API key. Company is bound to the key. `createClient` / `create_client` does not hit the network.
-
-`DOCSORB_URL` is `https://sdk.docsorb.com`. The key needs the `shield.evaluate` scope.
+You need an API key with the `shield.evaluate` scope. Your workspace is inferred from the key. Creating a client makes no network calls.
 
 ```ts
 import { createClient } from "@docsorb/sdk";
@@ -169,8 +167,6 @@ pytest
 - **[Guardrails](https://help.docsorb.com/ai/guardrails)** — how enforcement works
 - **[API reference](https://help.docsorb.com/api/overview)** — REST API used by these clients
 - **[OpenAPI spec](./spec/openapi.yaml)** — evaluate, sanitise, anonymise
-
-Publish from the package directory (`pnpm publish` in `packages/js`, `python -m build` in `packages/python`). This repo root stays private.
 
 ## License
 
